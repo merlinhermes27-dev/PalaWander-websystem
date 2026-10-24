@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PalaWander | Admin Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <!-- Kailangan lang ito para sa "Import Default Destinations" button -->
+    <script src="destinations.js"></script>
+</head>
+<body>
+
+    <header class="top-header">
+        <a href="admin-dashboard.html" class="brand">
+            PalaWander
+        </a>
+
+        <div class="header-right">
+            <a href="index.html" class="logout-btn" id="logoutBtn">Logout</a>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-heading">
+                <p>MENU</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">▦</span>
+                    Dashboard
+                </a>
+
+                <a href="#users" class="nav-link">
+                    <span class="nav-icon">☺</span>
+                    Manage Users
+                </a>
+
+                <a href="#staff" class="nav-link">
+                    <span class="nav-icon">⚒</span>
+                    Manage Staff
+                </a>
+
+                <a href="#destinations" class="nav-link">
+                    <span class="nav-icon">⌖</span>
+                    Manage Destinations
+                </a>
+
+                <a href="#approvals" class="nav-link">
+                    <span class="nav-icon">✓</span>
+                    Approvals
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <a href="#profile" class="nav-link">
+                    <span class="nav-icon">♙</span>
+                    My Profile
+                </a>
+            </div>
+
+        </aside>
+
+
+        <main class="main-content" id="dashboard">
+
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div>
+                    <p class="eyebrow">ADMIN CONTROL PANEL</p>
+                    <h1>Manage PalaWander</h1>
+                    <p class="welcome-description">
+                        Manage user accounts, staff access, destinations,
+                        and pending submissions.
+                    </p>
+                </div>
+            </section>
+
+            <!-- USERS -->
+            <section class="content-section" id="users">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">ACCOUNTS</p>
+                        <h2>Manage Users</h2>
+                    </div>
+
+                    <button type="button" class="view-link" id="addUserBtn">
+                        + Add User
+                    </button>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="data-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersBody">
+                            <tr>
+                                <td colspan="4" class="empty-row">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+            <!-- STAFF -->
+            <section class="content-section" id="staff">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">TOURIST STAFF</p>
+                        <h2>Manage Staff</h2>
+                    </div>
+
+                    <button type="button" class="view-link" id="addStaffBtn">
+                        + Add Staff
+                    </button>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="data-table" id="staffTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffBody">
+                            <tr>
+                                <td colspan="4" class="empty-row">Loading staff accounts...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+            <!-- DESTINATIONS -->
+            <section class="content-section" id="destinations">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">CONTENT</p>
+                        <h2>Manage Destinations</h2>
+                    </div>
+
+                    <div class="section-actions">
+                        <button type="button" class="view-link" id="importDestinationsBtn">
+                            Import Default Destinations
+                        </button>
+                        <button type="button" class="view-link" id="addDestinationBtn">
+                            + Add Destination
+                        </button>
+                    </div>
+                </div>
+
+                <div class="destination-grid" id="destinationsGrid">
+                    <div class="empty-state">
+                        <span class="empty-icon">⌖</span>
+                        <h3>Loading destinations...</h3>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- APPROVALS -->
+            <section class="content-section" id="approvals">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">PENDING REVIEW</p>
+                        <h2>Approve Submissions</h2>
+                    </div>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="data-table" id="approvalsTable">
+                        <thead>
+                            <tr>
+                                <th>Destination</th>
+                                <th>Town</th>
+                                <th>Type</th>
+                                <th>Submitted By</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvalsBody">
+                            <tr>
+                                <td colspan="6" class="empty-row">Loading pending submissions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="profile" class="content-section profile-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">ACCOUNT</p>
+                        <h2>Admin Profile</h2>
+                    </div>
+                </div>
+                <p><strong>Name:</strong> <span id="profileName">—</span></p>
+                <p><strong>Email:</strong> <span id="profileEmail">—</span></p>
+                <p><strong>Role:</strong> Admin</p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ADD USER / ADD STAFF DIALOG -->
+    <dialog class="modal" id="accountDialog">
+        <form class="modal-form" id="accountForm">
+            <h3 id="accountDialogTitle">Add User</h3>
+
+            <label for="accountFullName">Full Name</label>
+            <input type="text" id="accountFullName" required>
+
+            <label for="accountEmail">Email</label>
+            <input type="email" id="accountEmail" required>
+
+            <label for="accountPassword">Temporary Password</label>
+            <input type="password" id="accountPassword" minlength="8" required
+                   placeholder="At least 8 characters" autocomplete="new-password">
+
+            <p class="modal-message" id="accountMessage" aria-live="polite"></p>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" id="accountCancelBtn">Cancel</button>
+                <button type="submit" class="primary-btn" id="accountSubmitBtn">Create Account</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- ADD DESTINATION DIALOG -->
+    <dialog class="modal" id="destinationDialog">
+        <form class="modal-form" id="destinationForm">
+            <h3>Add Destination</h3>
+
+            <label for="destName">Destination Name</label>
+            <input type="text" id="destName" required placeholder="e.g. Nacpan Beach">
+
+            <label for="destTown">Town</label>
+            <select id="destTown" required>
+                <option value="">Select a town</option>
+                <option value="Coron">Coron</option>
+                <option value="Cuyo">Cuyo</option>
+                <option value="El Nido">El Nido</option>
+                <option value="Taytay">Taytay</option>
+                <option value="San Vicente">San Vicente</option>
+                <option value="Roxas">Roxas</option>
+                <option value="Puerto Princesa">Puerto Princesa</option>
+                <option value="Aborlan">Aborlan</option>
+                <option value="Narra">Narra</option>
+                <option value="Culion">Culion</option>
+                <option value="Cagayancillo">Cagayancillo</option>
+                <option value="Balabac">Balabac</option>
+            </select>
+
+            <label for="destDescription">Description</label>
+            <textarea id="destDescription" rows="4" required></textarea>
+
+            <label for="destImage">Image Path (optional)</label>
+            <input type="text" id="destImage" placeholder="e.g. images/new-destination.jpg">
+
+            <label for="destDistance">Distance from Puerto Princesa in km (optional)</label>
+            <input type="number" id="destDistance" min="0" step="any">
+
+            <p class="modal-message" id="destMessage" aria-live="polite"></p>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" id="destCancelBtn">Cancel</button>
+                <button type="submit" class="primary-btn" id="destSubmitBtn">Add Destination</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+        createUserWithEmailAndPassword
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc,
+        deleteDoc,
+        collection,
+        query,
+        where,
+        getDocs,
+        serverTimestamp
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA1XJ8D4Re-MWwJcCL4BoeXw5K5-TIz3V4",
+        authDomain: "palawander.firebaseapp.com",
+        projectId: "palawander",
+        storageBucket: "palawander.firebasestorage.app",
+        messagingSenderId: "210829193423",
+        appId: "1:210829193423:web:f170cac841e2cc57a587ba",
+        measurementId: "G-D2XCS3H5MP"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Pangalawang Firebase app, ginagamit lang sa paggawa ng accounts.
+      // Kapag sa main auth gagawa ng user, mala-log out ang admin at
+      // mala-log in bilang bagong user. Sa secondary auth, hindi.
+      const secondaryApp = initializeApp(firebaseConfig, "secondary");
+      const secondaryAuth = getAuth(secondaryApp);
+
+      // ---------- Helpers ----------
+      function escapeHtml(value) {
+          return String(value ?? "")
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+      }
+
+      function capitalize(text) {
+          if (!text) return "";
+          return text.charAt(0).toUpperCase() + text.slice(1);
+      }
+
+      // Kapareho ng slugify sa scriptsdashboard.js (para pareho ang destination id)
+      function slugify(text) {
+          return String(text).toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+      }
+
+      function setMessage(el, text, isError) {
+          el.textContent = text;
+          el.classList.toggle("error", !!isError);
+      }
+
+      // ---------- Auth guard ----------
+      onAuthStateChanged(auth, async (user) => {
+          if (!user) {
+              window.location.href = "index.html";
+              return;
+          }
+
+          const userDocSnap = await getDoc(doc(db, "users", user.uid));
+
+          if (!userDocSnap.exists() || userDocSnap.data().role !== "admin") {
+              // Hindi admin ang naka-login, ibalik sa index
+              window.location.href = "index.html";
+              return;
+          }
+
+          const adminData = userDocSnap.data();
+          document.getElementById("profileName").textContent = adminData.fullName || "—";
+          document.getElementById("profileEmail").textContent = adminData.email || user.email || "—";
+
+          loadUsers();
+          loadStaff();
+          loadDestinations();
+          loadApprovals();
+      });
+
+      document.getElementById("logoutBtn").addEventListener("click", (e) => {
+          e.preventDefault();
+          signOut(auth).then(() => {
+              window.location.href = "index.html";
+          });
+      });
+
+      // ---------- MANAGE USERS ----------
+      async function loadUsers() {
+          const tbody = document.getElementById("usersBody");
+
+          try {
+              const q = query(collection(db, "users"), where("role", "==", "user"));
+              const snapshot = await getDocs(q);
+
+              if (snapshot.empty) {
+                  tbody.innerHTML = `<tr><td colspan="4" class="empty-row">No users yet.</td></tr>`;
+                  return;
+              }
+
+              let rows = "";
+              snapshot.forEach((docSnap) => {
+                  const data = docSnap.data();
+                  rows += `
+                      <tr>
+                          <td>${escapeHtml(data.fullName || "—")}</td>
+                          <td>${escapeHtml(data.email || "—")}</td>
+                          <td>${escapeHtml(capitalize(data.role))}</td>
+                          <td>
+                              <button type="button" class="view-link danger delete-btn"
+                                  data-kind="user"
+                                  data-id="${escapeHtml(docSnap.id)}"
+                                  data-label="${escapeHtml(data.fullName || data.email || "this user")}">Delete</button>
+                          </td>
+                      </tr>
+                  `;
+              });
+              tbody.innerHTML = rows;
+
+          } catch (error) {
+              console.error("Error loading users:", error);
+              tbody.innerHTML = `<tr><td colspan="4" class="empty-row">Could not load users.</td></tr>`;
+          }
+      }
+
+      // ---------- MANAGE STAFF ----------
+      async function loadStaff() {
+          const tbody = document.getElementById("staffBody");
+
+          try {
+              const q = query(collection(db, "users"), where("role", "==", "staff"));
+              const snapshot = await getDocs(q);
+
+              if (snapshot.empty) {
+                  tbody.innerHTML = `<tr><td colspan="4" class="empty-row">No staff accounts yet.</td></tr>`;
+                  return;
+              }
+
+              let rows = "";
+              snapshot.forEach((docSnap) => {
+                  const data = docSnap.data();
+                  rows += `
+                      <tr>
+                          <td>${escapeHtml(data.fullName || "—")}</td>
+                          <td>${escapeHtml(data.email || "—")}</td>
+                          <td>${escapeHtml(capitalize(data.status || "active"))}</td>
+                          <td>
+                              <button type="button" class="view-link danger delete-btn"
+                                  data-kind="staff"
+                                  data-id="${escapeHtml(docSnap.id)}"
+                                  data-label="${escapeHtml(data.fullName || data.email || "this staff account")}">Delete</button>
+                          </td>
+                      </tr>
+                  `;
+              });
+              tbody.innerHTML = rows;
+
+          } catch (error) {
+              console.error("Error loading staff:", error);
+              tbody.innerHTML = `<tr><td colspan="4" class="empty-row">Could not load staff accounts.</td></tr>`;
+          }
+      }
+
+      // ---------- MANAGE DESTINATIONS ----------
+      async function loadDestinations() {
+          const grid = document.getElementById("destinationsGrid");
+
+          try {
+              const snapshot = await getDocs(collection(db, "destinations"));
+
+              if (snapshot.empty) {
+                  grid.innerHTML = `
+                      <div class="empty-state">
+                          <span class="empty-icon">⌖</span>
+                          <h3>No destinations in the database yet.</h3>
+                          <p>Add one, or click "Import Default Destinations" to load the starter list.</p>
+                      </div>
+                  `;
+                  return;
+              }
+
+              const items = [];
+              snapshot.forEach((docSnap) => items.push({ id: docSnap.id, ...docSnap.data() }));
+              items.sort((a, b) =>
+                  String(a.town || "").localeCompare(String(b.town || "")) ||
+                  String(a.name || "").localeCompare(String(b.name || ""))
+              );
+
+              grid.innerHTML = items.map((d) => `
+                  <article class="destination-card admin-dest-card">
+                      <img src="${escapeHtml(d.image || "images/placeholder.jpg")}" alt="${escapeHtml(d.name)}">
+                      <div class="destination-info">
+                          <p class="location-label">${escapeHtml(String(d.town || "").toUpperCase())}</p>
+                          <h3>${escapeHtml(d.name)}</h3>
+                          ${d.description ? `<p>${escapeHtml(d.description)}</p>` : ""}
+                          <div class="card-actions">
+                              <button type="button" class="view-link danger delete-btn"
+                                  data-kind="destination"
+                                  data-id="${escapeHtml(d.id)}"
+                                  data-label="${escapeHtml(d.name)}">Delete</button>
+                          </div>
+                      </div>
+                  </article>
+              `).join("");
+
+          } catch (error) {
+              console.error("Error loading destinations:", error);
+              grid.innerHTML = `
+                  <div class="empty-state">
+                      <h3>Could not load destinations.</h3>
+                      <p>Check your Firestore rules and the Console.</p>
+                  </div>
+              `;
+          }
+      }
+
+      // Isang beses na pag-import ng laman ng destinations.js papunta sa Firestore
+      // para pwede na ring i-delete ang mga default destinations.
+      document.getElementById("importDestinationsBtn").addEventListener("click", async (e) => {
+          const btn = e.currentTarget;
+
+          if (typeof destinations === "undefined" || !destinations.length) {
+              alert("destinations.js is not loaded or is empty.");
+              return;
+          }
+          if (!confirm(`Import ${destinations.length} default destinations to the database? Existing ones will be skipped.`)) {
+              return;
+          }
+
+          btn.disabled = true;
+          const originalText = btn.textContent;
+          btn.textContent = "Importing...";
+
+          try {
+              const existing = await getDocs(collection(db, "destinations"));
+              const existingIds = new Set();
+              existing.forEach((d) => existingIds.add(d.id));
+
+              let added = 0;
+              for (const dest of destinations) {
+                  const id = slugify(`${dest.town}-${dest.name}`);
+                  if (existingIds.has(id)) continue;
+
+                  await setDoc(doc(db, "destinations", id), {
+                      name: dest.name,
+                      town: dest.town,
+                      image: dest.image || "images/placeholder.jpg",
+                      description: dest.description || "",
+                      distanceKm: dest.distanceKm || null,
+                      approvedAt: new Date().toISOString()
+                  });
+                  added++;
+              }
+
+              alert(`Done. ${added} destination(s) imported.`);
+              loadDestinations();
+
+          } catch (error) {
+              console.error("Import failed:", error);
+              alert("Import failed: " + error.message);
+          } finally {
+              btn.disabled = false;
+              btn.textContent = originalText;
+          }
+      });
+
+      // ---------- APPROVALS ----------
+      async function loadApprovals() {
+          const tbody = document.getElementById("approvalsBody");
+
+          try {
+              const q = query(collection(db, "pendingDestinations"), where("status", "==", "pending"));
+              const snapshot = await getDocs(q);
+
+              if (snapshot.empty) {
+                  tbody.innerHTML = `<tr><td colspan="6" class="empty-row">No pending submissions.</td></tr>`;
+                  return;
+              }
+
+              let rows = "";
+              for (const docSnap of snapshot.docs) {
+                  const data = docSnap.data();
+                  const date = data.submittedAt?.toDate
+                      ? data.submittedAt.toDate().toLocaleDateString()
+                      : "—";
+
+                  let submittedByName = data.submittedBy;
+                  try {
+                      const staffDocSnap = await getDoc(doc(db, "users", data.submittedBy));
+                      if (staffDocSnap.exists()) {
+                          submittedByName = staffDocSnap.data().fullName || data.submittedBy;
+                      }
+                  } catch (e) {
+                      // ignore
+                  }
+
+                  rows += `
+                      <tr>
+                          <td>${escapeHtml(data.name)}</td>
+                          <td>${escapeHtml(data.town)}</td>
+                          <td>${escapeHtml(data.changeType || "Add")}</td>
+                          <td>${escapeHtml(submittedByName)}</td>
+                          <td>${escapeHtml(date)}</td>
+                          <td>
+                              <button type="button" class="view-link approve-btn" data-id="${escapeHtml(docSnap.id)}">Approve</button>
+                              <button type="button" class="view-link danger reject-btn" data-id="${escapeHtml(docSnap.id)}">Reject</button>
+                          </td>
+                      </tr>
+                  `;
+              }
+              tbody.innerHTML = rows;
+
+          } catch (error) {
+              console.error("Error loading approvals:", error);
+              tbody.innerHTML = `<tr><td colspan="6" class="empty-row">Could not load submissions.</td></tr>`;
+          }
+      }
+
+      // Sinusunod na ngayon ang "Type" ng submission:
+      //  Add    -> gagawa ng destination
+      //  Edit   -> ia-update ang existing na destination (town + pangalan)
+      //  Delete -> buburahin ang destination
+      async function approveDestination(pendingId) {
+          const pendingRef = doc(db, "pendingDestinations", pendingId);
+          const pendingSnap = await getDoc(pendingRef);
+
+          if (!pendingSnap.exists()) return;
+          const data = pendingSnap.data();
+
+          const destRef = doc(db, "destinations", slugify(`${data.town}-${data.name}`));
+          const type = data.changeType || "Add";
+
+          if (type === "Delete") {
+              await deleteDoc(destRef);
+
+          } else if (type === "Edit") {
+              const update = {
+                  name: data.name,
+                  town: data.town,
+                  description: data.description,
+                  updatedAt: new Date().toISOString()
+              };
+              if (data.image && data.image !== "images/placeholder.jpg") {
+                  update.image = data.image;
+              }
+              await setDoc(destRef, update, { merge: true });
+
+          } else {
+              await setDoc(destRef, {
+                  name: data.name,
+                  town: data.town,
+                  description: data.description,
+                  image: data.image,
+                  distanceKm: data.distanceKm || null,
+                  approvedAt: new Date().toISOString()
+              });
+          }
+
+          await setDoc(pendingRef, { status: "approved" }, { merge: true });
+
+          loadApprovals();
+          loadDestinations();
+      }
+
+      async function rejectDestination(pendingId) {
+          const pendingRef = doc(db, "pendingDestinations", pendingId);
+          await setDoc(pendingRef, { status: "rejected" }, { merge: true });
+          loadApprovals();
+      }
+
+      // ---------- Click handling para sa Approve / Reject / Delete ----------
+      document.addEventListener("click", async (e) => {
+          const approveBtn = e.target.closest(".approve-btn");
+          if (approveBtn) {
+              approveBtn.disabled = true;
+              try {
+                  await approveDestination(approveBtn.dataset.id);
+              } catch (error) {
+                  console.error("Approve failed:", error);
+                  alert("Approve failed: " + error.message);
+                  approveBtn.disabled = false;
+              }
+              return;
+          }
+
+          const rejectBtn = e.target.closest(".reject-btn");
+          if (rejectBtn) {
+              rejectBtn.disabled = true;
+              try {
+                  await rejectDestination(rejectBtn.dataset.id);
+              } catch (error) {
+                  console.error("Reject failed:", error);
+                  alert("Reject failed: " + error.message);
+                  rejectBtn.disabled = false;
+              }
+              return;
+          }
+
+          const deleteBtn = e.target.closest(".delete-btn");
+          if (deleteBtn) {
+              const { kind, id, label } = deleteBtn.dataset;
+              if (!confirm(`Delete ${label}? This cannot be undone.`)) return;
+
+              deleteBtn.disabled = true;
+              try {
+                  const collectionName = kind === "destination" ? "destinations" : "users";
+                  await deleteDoc(doc(db, collectionName, id));
+
+                  if (kind === "user") loadUsers();
+                  else if (kind === "staff") loadStaff();
+                  else loadDestinations();
+
+              } catch (error) {
+                  console.error("Delete failed:", error);
+                  alert("Delete failed: " + error.message);
+                  deleteBtn.disabled = false;
+              }
+          }
+      });
+
+      // ---------- ADD USER / ADD STAFF ----------
+      const accountDialog = document.getElementById("accountDialog");
+      const accountForm = document.getElementById("accountForm");
+      const accountMessage = document.getElementById("accountMessage");
+      const accountSubmitBtn = document.getElementById("accountSubmitBtn");
+      let accountRole = "user";
+
+      function openAccountDialog(role) {
+          accountRole = role;
+          document.getElementById("accountDialogTitle").textContent =
+              role === "staff" ? "Add Staff" : "Add User";
+          accountForm.reset();
+          setMessage(accountMessage, "", false);
+          accountDialog.showModal();
+      }
+
+      document.getElementById("addUserBtn").addEventListener("click", () => openAccountDialog("user"));
+      document.getElementById("addStaffBtn").addEventListener("click", () => openAccountDialog("staff"));
+      document.getElementById("accountCancelBtn").addEventListener("click", () => accountDialog.close());
+
+      function friendlyAuthError(error) {
+          switch (error.code) {
+              case "auth/email-already-in-use": return "That email is already registered.";
+              case "auth/invalid-email": return "Please enter a valid email address.";
+              case "auth/weak-password": return "Password is too weak. Use at least 8 characters.";
+              default: return error.message || "Something went wrong.";
+          }
+      }
+
+      accountForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const fullName = document.getElementById("accountFullName").value.trim();
+          const email = document.getElementById("accountEmail").value.trim();
+          const password = document.getElementById("accountPassword").value;
+
+          // 8 ang minimum dahil minlength="8" ang login form; kapag mas maikli,
+          // hindi makaka-login ang bagong account.
+          if (password.length < 8) {
+              setMessage(accountMessage, "Password must be at least 8 characters.", true);
+              return;
+          }
+
+          accountSubmitBtn.disabled = true;
+          setMessage(accountMessage, "Creating account...", false);
+
+          try {
+              const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+
+              try {
+                  await setDoc(doc(db, "users", cred.user.uid), {
+                      fullName,
+                      email,
+                      role: accountRole,
+                      status: "active",
+                      createdAt: serverTimestamp()
+                  });
+              } catch (profileError) {
+                  throw new Error(
+                      "The login account was created, but saving the profile failed: " + profileError.message
+                  );
+              }
+
+              await signOut(secondaryAuth);
+              accountDialog.close();
+
+              if (accountRole === "staff") loadStaff();
+              else loadUsers();
+
+          } catch (error) {
+              setMessage(accountMessage, friendlyAuthError(error), true);
+              try { await signOut(secondaryAuth); } catch (_) { /* ignore */ }
+
+          } finally {
+              accountSubmitBtn.disabled = false;
+          }
+      });
+
+      // ---------- ADD DESTINATION ----------
+      const destinationDialog = document.getElementById("destinationDialog");
+      const destinationForm = document.getElementById("destinationForm");
+      const destMessage = document.getElementById("destMessage");
+      const destSubmitBtn = document.getElementById("destSubmitBtn");
+
+      document.getElementById("addDestinationBtn").addEventListener("click", () => {
+          destinationForm.reset();
+          setMessage(destMessage, "", false);
+          destinationDialog.showModal();
+      });
+      document.getElementById("destCancelBtn").addEventListener("click", () => destinationDialog.close());
+
+      destinationForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("destName").value.trim();
+          const town = document.getElementById("destTown").value;
+          const description = document.getElementById("destDescription").value.trim();
+          const image = document.getElementById("destImage").value.trim() || "images/placeholder.jpg";
+          const distanceRaw = document.getElementById("destDistance").value;
+          const distanceKm = distanceRaw === "" ? null : Number(distanceRaw);
+
+          if (!name || !town) return;
+
+          destSubmitBtn.disabled = true;
+          setMessage(destMessage, "Saving...", false);
+
+          try {
+              const destRef = doc(db, "destinations", slugify(`${town}-${name}`));
+
+              const existing = await getDoc(destRef);
+              if (existing.exists()) {
+                  setMessage(destMessage, "That destination already exists in this town.", true);
+                  return;
+              }
+
+              await setDoc(destRef, {
+                  name,
+                  town,
+                  description,
+                  image,
+                  distanceKm,
+                  approvedAt: new Date().toISOString()
+              });
+
+              destinationDialog.close();
+              loadDestinations();
+
+          } catch (error) {
+              setMessage(destMessage, "Error: " + error.message, true);
+
+          } finally {
+              destSubmitBtn.disabled = false;
+          }
+      });
+    </script>
+</body>
+</html>
